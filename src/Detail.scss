@@ -1,0 +1,41 @@
+$mainColor:black;
+
+.red{
+    color:$mainColor
+}
+
+/* nesting */
+
+ // 그냥쓰기
+/* div.container h4{
+    color:blue;
+}
+div.container p{
+    color:green;
+}
+ */
+ // nesting으로 쓰기
+/*  div.container {
+     
+    h4{
+        color:blue;
+     }
+
+     p{
+        color:green;
+     }
+ } */
+
+ // extends
+ 
+ .my-alert {
+    background : wheat;
+    padding : 15px;
+    border-radius : 5px;
+    max-width : 500px;
+    width : 100%;
+    margin : auto;
+  }
+  .my-alert p {
+    margin-bottom : 0;
+  }
