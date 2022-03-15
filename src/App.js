@@ -5,7 +5,8 @@ import './App.css';
 import Data from './data.js'
 import {Link,Route,Switch} from 'react-router-dom';
 import Detail from './Detail.js';
-import Navi from './Nav.js'
+import Cart from './Cart.js';
+import Navi from './Nav.js';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
@@ -31,6 +32,9 @@ function App() {
      
    
       <Switch>
+        <Route path="/cart">
+          <Cart></Cart>
+        </Route>
       
        {/* Detail page */}
        <Route path="/detail/:id">
@@ -99,17 +103,14 @@ function App() {
   let stock = useContext(stockContext); // 범위 입력
 
   return(
+
     <div className='col-md-4'>  {/* 정확히 3등분 쪼개기 */}
       <img src={'https://codingapple1.github.io/shop/shoes'+(props.shoes[props.i].id+1)+'.jpg'} width="100%" />
       <h4>{props.shoes[props.i].title}</h4>
       <p>{props.shoes[props.i].content}</p>
       <p>{props.shoes[props.i].price}</p>
-      <Test></Test>
-      
-  </div>
+    </div>
   )  
-
-  
 }
 
 function Test(){
