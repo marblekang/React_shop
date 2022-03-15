@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './App.css';
 /* import { Navbar,Container,Nav,NavDropdown,Form,Button,FormControl } from 'react-bootstrap'; */
 import Data from './data.js'
@@ -9,6 +9,7 @@ import Navi from './Nav.js'
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
+export let stockContext = React.createContext();
 
 
 /* ///////////////////////////////////////////////////////////// */
@@ -17,7 +18,7 @@ function App() {
   let arr = [2,3,4]
   let newArr;
   let [loading,setLoading] = useState(false);
-  let [stock,setStock] = useState(10);
+  let [stock,setStock] = useState([10,11,12]);
 //  /* /////////변수, 스테이트////////////////////////////////// *////////
 
 /* return */
@@ -33,7 +34,9 @@ function App() {
       
        {/* Detail page */}
        <Route path="/detail/:id">
-        <Detail shoes={shoes} stock={stock} setStock={setStock}></Detail>      
+        <stockContext.Provider value={stock}>
+        <Detail shoes={shoes} stock={stock} setStock={setStock}/>
+        </stockContext.Provider>      
       </Route>
 
       {/* Main page */}
@@ -47,6 +50,7 @@ function App() {
           {/* ///////////////////////// /////////////*/}
           
           {/* Card */}
+          <stockContext.Provider value={stock}>
           <div className='container'>
             <div className='row'>
             {shoes.map(function(a,i){
@@ -56,14 +60,16 @@ function App() {
             })}
             </div>
           </div>
+          </stockContext.Provider>
           { loading === true
             ?<div >로딩중입니다.</div>
             : null  }
           <button className="btn btn-primary" onClick={()=>{
-            setLoading(true);
+            setLoading(true); // 로딩 UI 창 보이게.
+            // ajax 요청으로 해당 url 에서 데이터 가져옴.
             axios.get('https://codingapple1.github.io/shop/data2.json')
-            .then((result)=>{
-              setLoading(false);
+            .then((result)=>{ // 가져온 데이터는 result에 담김.
+              setLoading(false); // 로딩 완료되면 로딩UI 창 안보이게
               /* 괄호벗기기 문법. */
               /* state 데이터 사본 생성없이 원하는 데이터 추가 */
               /* 원래 shoes에 있던 데이터 + result.data의 새로운 데이터 추가 */
@@ -89,14 +95,28 @@ function App() {
 
  /* card */
  function Card(props){
+
+  let stock = useContext(stockContext); // 범위 입력
+
   return(
     <div className='col-md-4'>  {/* 정확히 3등분 쪼개기 */}
       <img src={'https://codingapple1.github.io/shop/shoes'+(props.shoes[props.i].id+1)+'.jpg'} width="100%" />
       <h4>{props.shoes[props.i].title}</h4>
       <p>{props.shoes[props.i].content}</p>
       <p>{props.shoes[props.i].price}</p>
+      <Test></Test>
+      
   </div>
   )  
+
+  
+}
+
+function Test(){
+  let stock = useContext(stockContext)
+  return(
+    <p>재고 : {stock}</p>
+  )
 }
 ///////////
 

@@ -1,8 +1,10 @@
 /* eslint-disable */
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components' // styled-components
 import './Detail.scss';
+import {stockContext} from './App.js';
+import {Nav} from 'react-bootstrap';
 
 let Box = styled.div`
 padding:20px;
@@ -14,7 +16,7 @@ font-size:25px`
 
 function Detail(props){
 
-    
+    let stock = useContext(stockContext);
     let history = useHistory();  
     let { id } = useParams(); /* 꺼내올 url파라미터 명 입력, 이름 같아야함. 
                                  /detail/:파라미터명    이면 같은 파라미터명 입력*/
@@ -44,7 +46,8 @@ function Detail(props){
      
      let [inputData,setInputData] = useState('');  
 
-
+     let [pushedTab,setPushedTab] = useState(0);
+     
 
     return(
     
@@ -74,13 +77,41 @@ function Detail(props){
             }
             }>주문하기</button>
             : null}
-            <div><button onClick={()=>{history.goBack()}} className="btn">🔙</button></div>
+            <div><button onClick={()=>{history.goBack()}} className="btn">뒤로가기</button></div>
          {/*    <Box backgroundColor="blue">sad</Box> */}
           </div>
         </div>
+                                                {/* 기본으로 눌려진 키(탭) 설정 */}
+        <Nav className='mt-5' variant="tabs" defaultActiveKey="link-0">
+          <Nav.Item>
+            <Nav.Link eventKey="link-0" onClick={()=>{setPushedTab(0)}}>Tab 1</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey="link-1" onClick={()=>{setPushedTab(1)}}>Tab  2</Nav.Link>
+          </Nav.Item>
+        </Nav>
+
+            <TabContent pushedTab = {pushedTab}></TabContent>
+
+{/* //////////////////// */}        
       </div> 
     )
 };
+
+function TabContent(props){
+ 
+    if(props.pushedTab === 0){
+      return(
+        <div>첫번째 내용입니다.</div>
+      )
+      }else if(props.pushedTab === 1){
+        return(
+          <div>두번째 내용입니다.</div>  
+        )
+        
+      }
+  
+}
 
 function Info(props){
   return(
