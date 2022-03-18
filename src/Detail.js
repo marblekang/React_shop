@@ -5,6 +5,7 @@ import styled from 'styled-components' // styled-components
 import './Detail.scss';
 import {stockContext} from './App.js';
 import {Nav} from 'react-bootstrap';
+import {connect} from 'react-redux';
 
 let Box = styled.div`
 padding:20px;
@@ -71,13 +72,17 @@ function Detail(props){
             <p>{findedProd.content}</p>
             <p>{findedProd.price}</p>
             <Info stock={props.stock}></Info>
+            
             {props.stock > 0
             ? <button className="btn btn-danger" onClick={function(){
               props.setStock(props.stock-1);
+              props.dispatch({type:'add', payload:{id: 2, name : 'newShoes' , quan:1 }});
+              history.push('/cart')
             }
             }>주문하기</button>
             : null}
-            <div><button onClick={()=>{history.goBack()}} className="btn">뒤로가기</button></div>
+
+            <div><button className="btn btn-danger" onClick={()=>{history.goBack()}}>뒤로가기</button></div>
          {/*    <Box backgroundColor="blue">sad</Box> */}
           </div>
         </div>
@@ -118,4 +123,13 @@ function Info(props){
     <p>재고:{props.stock}</p>
   )
 }
-export default Detail
+
+// store 안에 있는 state 를 props로 만들어 주는 함수
+function stateToProps(state){
+  return {
+    prodInfo: state.reducer,
+    alert : state.reducer2
+  }
+}
+
+export default connect(stateToProps)(Detail);

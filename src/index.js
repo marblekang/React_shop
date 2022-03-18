@@ -13,8 +13,14 @@ let prodInfo = [{id:0, name:'awesomeShoes', quan:2},{id:1, name:'awesomeSnack', 
 // reducer - 수량 증감을 위한 state
 function reducer(state = prodInfo, action){
   let copy = [...state];
+  
+  if(action.type === 'add'){
 
-  if (action.type === 'incQuan'){
+    let copy = [...state];
+    copy.push(action.payload);
+    return copy;
+
+  }else if (action.type === 'incQuan'){
 
    copy[0].quan++;
     return copy;

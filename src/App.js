@@ -19,7 +19,7 @@ function App() {
   let arr = [2,3,4]
   let newArr;
   let [loading,setLoading] = useState(false);
-  let [stock,setStock] = useState([10,11,12]);
+  let [stock,setStock] = useState([10]);
 //  /* /////////변수, 스테이트////////////////////////////////// *////////
 
 /* return */
