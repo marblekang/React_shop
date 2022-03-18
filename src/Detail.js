@@ -72,11 +72,11 @@ function Detail(props){
             <p>{findedProd.content}</p>
             <p>{findedProd.price}</p>
             <Info stock={props.stock}></Info>
-            
+          
             {props.stock > 0
             ? <button className="btn btn-danger" onClick={function(){
               props.setStock(props.stock-1);
-              props.dispatch({type:'add', payload:{id: 2, name : 'newShoes' , quan:1 }});
+              props.dispatch({type:'add', payload:{id: findedProd.id, name : findedProd.title , quan:1 }});
               history.push('/cart')
             }
             }>주문하기</button>

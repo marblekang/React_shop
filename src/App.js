@@ -101,10 +101,11 @@ function App() {
  function Card(props){
 
   let stock = useContext(stockContext); // 범위 입력
-
+  let history = useHistory();
   return(
 
-    <div className='col-md-4'>  {/* 정확히 3등분 쪼개기 */}
+    <div className='col-md-4' onClick={()=>{
+     history.push('/detail/' + props.shoes[props.i].id)}}>  {/* 정확히 3등분 쪼개기 */}
       <img src={'https://codingapple1.github.io/shop/shoes'+(props.shoes[props.i].id+1)+'.jpg'} width="100%" />
       <h4>{props.shoes[props.i].title}</h4>
       <p>{props.shoes[props.i].content}</p>

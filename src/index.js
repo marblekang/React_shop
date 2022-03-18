@@ -8,32 +8,36 @@ import {Provider} from 'react-redux';
 import {combineReducers, createStore} from 'redux';
 
 // 상품정보
-let prodInfo = [{id:0, name:'awesomeShoes', quan:2},{id:1, name:'awesomeSnack', quan:1}]
+let prodInfo = [];
 
 // reducer - 수량 증감을 위한 state
 function reducer(state = prodInfo, action){
-  let copy = [...state];
   
   if(action.type === 'add'){
-
-    let copy = [...state];
-    copy.push(action.payload);
-    return copy;
-
+    let isThereNo = state.findIndex((a)=>{return a.id === action.payload.id});
+      if (isThereNo >= 0){
+        let copy = [...state];
+        copy[isThereNo].quan++
+        return copy;
+      }else {
+        let copy = [...state];
+        copy.push(action.payload);
+        return copy;
+      }
   }else if (action.type === 'incQuan'){
-
-   copy[0].quan++;
+    let copy = [...state];
+   copy[action.payload].quan++;
     return copy;
   }else if(action.type === 'decQuan'){
-  
-    copy[0].quan--;
+    let copy = [...state];
+    copy[action.payload].quan--;
     return copy;
   }else{
     return state;
   }
 }
 
-// reducer - 알림창 상태 저장해서 보여주고 숨기는 state
+// reducer2 - 알림창 상태 저장해서 보여주고 숨기는 state
 let alertUi = true;
 
 function reducer2(state = alertUi,action){
