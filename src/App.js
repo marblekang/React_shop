@@ -1,10 +1,12 @@
 /* eslint-disable */
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState, lazy, Suspense } from 'react';
 import './App.css';
-/* import { Navbar,Container,Nav,NavDropdown,Form,Button,FormControl } from 'react-bootstrap'; */
 import Data from './data.js'
 import {Link,Route,Switch} from 'react-router-dom';
-import Detail from './Detail.js';
+
+//import Detail from './Detail.js';
+let Detail = lazy(()=>{ return import('./Detail.js')}); // Detail 컴포넌트가 필요할 때만 import Detail.js 해옴
+
 import Cart from './Cart.js';
 import Navi from './Nav.js';
 import { useHistory } from 'react-router-dom';
@@ -22,6 +24,8 @@ function App() {
   let [stock,setStock] = useState([10]);
 //  /* /////////변수, 스테이트////////////////////////////////// *////////
 
+
+
 /* return */
   return (
     <div className="App">
@@ -38,8 +42,11 @@ function App() {
       
        {/* Detail page */}
        <Route path="/detail/:id">
+
         <stockContext.Provider value={stock}>
-        <Detail shoes={shoes} stock={stock} setStock={setStock}/>
+          <Suspense fallback={<div>로딩중...</div>}> {/* detail 페이지가 로딩되기 전에 보여줄 HTML */}
+            <Detail shoes={shoes} stock={stock} setStock={setStock}/>
+          </Suspense>
         </stockContext.Provider>      
       </Route>
 
@@ -80,7 +87,9 @@ function App() {
               setShoes([...shoes,...result.data])
             })
           }}>더보기</button>
+          <Test2></Test2>
           {/* //////////////////////////////////////////// */}
+          
       </Route>
      
     
@@ -121,7 +130,27 @@ function Test(){
   )
 }
 ///////////
-
+// 비동기처리 연습.
+function Test2(){
+  let [count,setCount] = useState(0);
+  let [age,setAge] = useState(20);
+  {
+    useEffect(()=>{  // useEffect 는 처음 렌더링 할때도 실행되므로 age가 +1이 되어 21 로 나옴. 그래서 count가 0 이 아닐때 (클릭한 후) 와 3보다 작을때 만 실행하게 함. 
+     if(count != 0 && count < 3){
+     setAge(age+1)
+    }
+  },[count])
+ }
+  return(
+    <div>
+      <div>안녕하세요 저는 {age} 살 입니다.</div>
+      <div>count:{count}</div>
+      <button onClick={()=>{setCount(count+1)}
+      }>누르면 한살먹기</button>
+      
+    </div>
+  )
+}
 
  
 
