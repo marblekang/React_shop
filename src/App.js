@@ -87,7 +87,7 @@ function App() {
               setShoes([...shoes,...result.data])
             })
           }}>더보기</button>
-          <Test2></Test2>
+          {/* <Test2></Test2> */}
           {/* //////////////////////////////////////////// */}
           
       </Route>
@@ -129,9 +129,11 @@ function Test(){
     <p>재고 : {stock}</p>
   )
 }
-///////////
+
+////////////
 // 비동기처리 연습.
-function Test2(){
+
+/* function Test2(){
   let [count,setCount] = useState(0);
   let [age,setAge] = useState(20);
   {
@@ -150,7 +152,7 @@ function Test2(){
       
     </div>
   )
-}
+}  */
 
  
 

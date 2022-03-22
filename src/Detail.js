@@ -49,6 +49,32 @@ function Detail(props){
 
      let [pushedTab,setPushedTab] = useState(0);
      
+     // Detail 페이지 방문하면 최근 본 상품 id 를  local storage에 array 데이터로 저장.
+    /*   useEffect(()=>{
+        localStorage.setItem('recentlyViewedItems',"");
+        var arr = localStorage.getItem('recentlyViewedItems');
+        arr = JSON.parse(arr);
+
+        arr.push(id);
+        arr = new Set(arr); // 자동으로 중복 제거해주는 Set 
+        arr = [...arr];
+        localStorage.setItem('recentlyViewedItems',JSON.stringfy(arr));
+      },[]) */
+
+      var items = new Array();
+        
+        useEffect(()=>{
+          localStorage.setItem('itemPage',JSON.stringify(items));
+          
+          var arr = localStorage.getItem('itemPage');
+          arr = JSON.parse(arr); 
+
+          arr.push(id);
+          arr = new Set(arr); // 자동으로 중복 제거해주는 Set 
+          arr = [...arr];
+          localStorage.setItem('itemPage',JSON.stringify(arr)); 
+          
+        },[]);
 
     return(
     
