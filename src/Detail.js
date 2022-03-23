@@ -61,19 +61,22 @@ function Detail(props){
         localStorage.setItem('recentlyViewedItems',JSON.stringfy(arr));
       },[]) */
 
-      var items = new Array();
-        
-        useEffect(()=>{
-          localStorage.setItem('itemPage',JSON.stringify(items));
-          
-          var arr = localStorage.getItem('itemPage');
-          arr = JSON.parse(arr); 
 
-          arr.push(id);
-          arr = new Set(arr); // 자동으로 중복 제거해주는 Set 
-          arr = [...arr];
-          localStorage.setItem('itemPage',JSON.stringify(arr)); 
+      useEffect(()=>{
+
+        var itemArr = localStorage.getItem('recentlyViewedPages');
+       
+        if(itemArr === null){
+          localStorage.setItem('recentlyViewedPages',JSON.stringify([]));
+          itemArr = localStorage.getItem('recentlyViewedPages');
+        }
           
+            itemArr = JSON.parse(itemArr); 
+            itemArr.push(id);
+            console.log(id)
+            itemArr = new Set(itemArr); // 자동으로 중복 제거해주는 Set 
+            itemArr = [...itemArr];
+            localStorage.setItem('recentlyViewedPages',JSON.stringify(itemArr)); 
         },[]);
 
     return(
